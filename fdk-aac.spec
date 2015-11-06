@@ -1,5 +1,5 @@
 Name:           fdk-aac
-Version:        0.1.3
+Version:        0.1.4
 Release:        1%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
@@ -61,6 +61,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Nov 06 2015 Nicolas Chauvet <kwizart@gmail.com> - 0.1.4-1
+- Update to 1.4
+
 * Sun Jan 26 2014 Nicolas Chauvet <kwizart@gmail.com> - 0.1.3-1
 - Update to 1.3.0
 
