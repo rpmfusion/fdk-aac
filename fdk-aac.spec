@@ -54,7 +54,8 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %files
-%doc ChangeLog NOTICE
+%doc ChangeLog
+%license NOTICE
 %{_libdir}/*.so.*
 
 %files devel
