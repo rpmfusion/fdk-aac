@@ -1,6 +1,6 @@
 Name:           fdk-aac
 Version:        0.1.4
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
@@ -17,7 +17,7 @@ scheme for digital audio.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -34,12 +34,13 @@ developing applications that use %{name}.
   --disable-silent-rules \
   --disable-static
 
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+%make_install INSTALL="install -p"
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
+
 
 %post -p /sbin/ldconfig
 
@@ -47,12 +48,10 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %files
-%defattr(-,root,root,-)
 %doc ChangeLog NOTICE
 %{_libdir}/*.so.*
 
 %files devel
-%defattr(-,root,root,-)
 %doc documentation/*.pdf
 %dir %{_includedir}/fdk-aac
 %{_includedir}/fdk-aac/*.h
@@ -61,6 +60,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Sep 07 2016 Nicolas Chauvet <kwizart@gmail.com> - 0.1.4-2
+- Spec file clean-up
+
 * Fri Nov 06 2015 Nicolas Chauvet <kwizart@gmail.com> - 0.1.4-1
 - Update to 1.4
 
