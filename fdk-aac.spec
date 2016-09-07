@@ -1,11 +1,16 @@
+%global commit0 a0bd8aa3b6339082fbe9d830264839fa50c0a4b7
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+
 Name:           fdk-aac
-Version:        0.1.4
-Release:        2%{?dist}
+Version:        0.1.5
+Release:        0.1%{?commit0:.git%{shortcommit0}}%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
-URL:            http://sourceforge.net/projects/opencore-amr
-Source0:        http://downloads.sourceforge.net/opencore-amr/%{name}-%{version}.tar.gz
+URL:            https://github.com/mstorsjo/fdk-aac
+Source:         https://github.com/mstorsjo/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+
+BuildRequires:  libtool
 
 
 %description
@@ -26,7 +31,8 @@ developing applications that use %{name}.
 
 
 %prep
-%setup -q
+%autosetup -n %{name}-%{?commit0}%{?!commit0:%{version}}
+autoreconf -vif
 
 
 %build
@@ -60,7 +66,8 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
-* Wed Sep 07 2016 Nicolas Chauvet <kwizart@gmail.com> - 0.1.4-2
+* Wed Sep 07 2016 Nicolas Chauvet <kwizart@gmail.com> - 0.1.5-0.1.gita0bd8aa
+- Update to github snapshot
 - Spec file clean-up
 
 * Fri Nov 06 2015 Nicolas Chauvet <kwizart@gmail.com> - 0.1.4-1
