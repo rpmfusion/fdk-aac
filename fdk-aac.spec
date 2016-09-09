@@ -8,7 +8,7 @@ Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
 URL:            https://github.com/mstorsjo/fdk-aac
-Source:         https://github.com/mstorsjo/%{name}/archive/%{commit0}.tar.gz#/%{name}-%{shortcommit0}.tar.gz
+Source0:        https://github.com/mstorsjo/%{name}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
 
 BuildRequires:  libtool
 
