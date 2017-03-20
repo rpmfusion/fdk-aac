@@ -1,14 +1,11 @@
-%global commit0 a0bd8aa3b6339082fbe9d830264839fa50c0a4b7
-%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
-
 Name:           fdk-aac
 Version:        0.1.5
-Release:        0.1%{?commit0:.git%{shortcommit0}}%{?dist}
+Release:        1%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
 URL:            https://github.com/mstorsjo/fdk-aac
-Source0:        https://github.com/mstorsjo/%{name}/archive/%{commit0}/%{name}-%{shortcommit0}.tar.gz
+Source0:        https://github.com/mstorsjo/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  libtool
 
@@ -31,9 +28,8 @@ developing applications that use %{name}.
 
 
 %prep
-%autosetup -n %{name}-%{?commit0}%{?!commit0:%{version}}
+%autosetup
 autoreconf -vif
-
 
 %build
 %configure \
@@ -67,6 +63,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Mar 20 2017 Leigh Scott <leigh123linux@googlemail.com> - 0.1.5-1
+- Update to 1.5
+
 * Wed Sep 07 2016 Nicolas Chauvet <kwizart@gmail.com> - 0.1.5-0.1.gita0bd8aa
 - Update to github snapshot
 - Spec file clean-up
