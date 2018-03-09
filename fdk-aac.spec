@@ -1,6 +1,6 @@
 Name:           fdk-aac
-Version:        0.1.5
-Release:        3%{?dist}
+Version:        0.1.6
+Release:        1%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
@@ -40,13 +40,11 @@ autoreconf -vif
 
 
 %install
-%make_install INSTALL="install -p"
+%make_install
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files
@@ -56,13 +54,15 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %files devel
 %doc documentation/*.pdf
-%dir %{_includedir}/fdk-aac
-%{_includedir}/fdk-aac/*.h
+%{_includedir}/fdk-aac/
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/%{name}.pc
 
 
 %changelog
+* Fri Mar 09 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.1.6-1
+- Update to 1.6
+
 * Fri Mar 02 2018 RPM Fusion Release Engineering <leigh123linux@googlemail.com> - 0.1.5-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
