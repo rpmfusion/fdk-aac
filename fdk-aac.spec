@@ -57,12 +57,13 @@ echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{nam
 %doc ChangeLog
 %license NOTICE
 %config %{_sysconfdir}/ld.so.conf.d/%{name}-%{_lib}.conf
+%dir %{_libdir}/%{name}/
 %{_libdir}/%{name}/*.so.*
 
 %files devel
 %doc documentation/*.pdf
 %{_libdir}/pkgconfig/%{name}.pc
-%{_includedir}/fdk-aac/
+%{_includedir}/%{name}/
 %{_libdir}/%{name}/*.so
 
 
