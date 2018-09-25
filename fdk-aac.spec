@@ -1,11 +1,11 @@
 Name:           fdk-aac
 Version:        0.1.6
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
-URL:            https://github.com/mstorsjo/fdk-aac
-Source0:        https://github.com/mstorsjo/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+URL:            https://github.com/mstorsjo/%{name}
+Source0:        %url/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  libtool
 
@@ -18,7 +18,6 @@ scheme for digital audio.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
@@ -33,6 +32,7 @@ autoreconf -vif
 
 %build
 %configure \
+  --libdir=%{_libdir}/%{name} \
   --disable-silent-rules \
   --disable-static
 
@@ -44,22 +44,30 @@ autoreconf -vif
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
-%ldconfig_scriptlets
+# ld.so.conf.d file
+rm -rf %{buildroot}%{_libdir}/fdk-aac/pkgconfig/
+install -m 0755 -d  %{buildroot}%{_sysconfdir}/ld.so.conf.d/
+echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{name}-%{_lib}.conf
 
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files
 %doc ChangeLog
 %license NOTICE
-%{_libdir}/*.so.*
+%config %{_sysconfdir}/ld.so.conf.d/%{name}-%{_lib}.conf
+%{_libdir}/%{name}/*.so.*
 
 %files devel
 %doc documentation/*.pdf
 %{_includedir}/fdk-aac/
-%{_libdir}/*.so
-%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/%{name}/*.so
 
 
 %changelog
+* Tue Sep 25 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.1.6-4
+- Remove group tag
+
 * Sun Aug 19 2018 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 0.1.6-3
 - Rebuilt for Fedora 29 Mass Rebuild binutils issue
 
