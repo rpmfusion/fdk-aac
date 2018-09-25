@@ -45,7 +45,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 # ld.so.conf.d file
-rm -rf %{buildroot}%{_libdir}/fdk-aac/pkgconfig/
+mv %{buildroot}%{_libdir}/%{name}/pkgconfig/ %{buildroot}%{_libdir}/pkgconfig/
 install -m 0755 -d  %{buildroot}%{_sysconfdir}/ld.so.conf.d/
 echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{name}-%{_lib}.conf
 
@@ -60,6 +60,7 @@ echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{nam
 
 %files devel
 %doc documentation/*.pdf
+%{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/fdk-aac/
 %{_libdir}/%{name}/*.so
 
