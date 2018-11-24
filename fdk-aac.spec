@@ -1,6 +1,6 @@
 Name:           fdk-aac
-Version:        0.1.6
-Release:        4%{?dist}
+Version:        2.0.0
+Release:        1%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
@@ -68,6 +68,9 @@ echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{nam
 
 
 %changelog
+* Sat Nov 24 2018 Leigh Scott <leigh123linux@googlemail.com> - 2.0.0-1
+- Update to 2.0.0
+
 * Tue Sep 25 2018 Leigh Scott <leigh123linux@googlemail.com> - 0.1.6-4
 - Remove group tag
 
