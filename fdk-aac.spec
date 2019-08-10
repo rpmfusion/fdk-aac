@@ -1,6 +1,6 @@
 Name:           fdk-aac
 Version:        2.0.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
@@ -68,6 +68,9 @@ echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{nam
 
 
 %changelog
+* Sat Aug 10 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.0.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_31_Mass_Rebuild
+
 * Tue Mar 05 2019 RPM Fusion Release Engineering <leigh123linux@gmail.com> - 2.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
