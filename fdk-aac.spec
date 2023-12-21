@@ -1,6 +1,6 @@
 Name:           fdk-aac
-Version:        2.0.2
-Release:        6%{?dist}
+Version:        2.0.3
+Release:        1%{?dist}
 Summary:        Fraunhofer FDK AAC Codec Library
 
 License:        FDK-AAC
@@ -8,7 +8,8 @@ URL:            https://github.com/mstorsjo/%{name}
 Source0:        %url/archive/v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  gcc-c++
-BuildRequires:  libtool
+BuildRequires:  cmake
+BuildRequires:  ninja-build
 
 
 %description
@@ -29,20 +30,18 @@ developing applications that use %{name}.
 
 %prep
 %autosetup
-autoreconf -vif
 
 %build
-%configure \
-  --libdir=%{_libdir}/%{name} \
-  --disable-silent-rules \
-  --disable-static
+%cmake \
+ -GNinja \
+ -DCMAKE_INSTALL_LIBDIR=%{_lib}/%{name}
 
-%make_build
+%cmake_build
 
 
 %install
-%make_install
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
+%cmake_install
+mv %{buildroot}%{_libdir}/%{name}/cmake/ %{buildroot}%{_libdir}/cmake/
 
 
 # ld.so.conf.d file
@@ -50,8 +49,7 @@ mv %{buildroot}%{_libdir}/%{name}/pkgconfig/ %{buildroot}%{_libdir}/pkgconfig/
 install -m 0755 -d  %{buildroot}%{_sysconfdir}/ld.so.conf.d/
 echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{name}-%{_lib}.conf
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 %files
 %doc ChangeLog
@@ -62,12 +60,16 @@ echo -e "%{_libdir}/%{name}/ \n" > %{buildroot}%{_sysconfdir}/ld.so.conf.d/%{nam
 
 %files devel
 %doc documentation/*.pdf
+%{_libdir}/cmake/%{name}/
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/%{name}/
 %{_libdir}/%{name}/*.so
 
 
 %changelog
+* Thu Dec 21 2023 Leigh Scott <leigh123linux@gmail.com> - 2.0.3-1
+- Update to 2.0.3
+
 * Thu Aug 03 2023 RPM Fusion Release Engineering <sergiomb@rpmfusion.org> - 2.0.2-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_39_Mass_Rebuild
 
